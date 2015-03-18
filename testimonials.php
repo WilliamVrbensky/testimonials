@@ -8,7 +8,7 @@
 *Version: 1.0
 */
  
-/*The code below is used to enqueue our stylesheet and a font from Font Awesome.
+/*The code below is used to enqueue our css stylesheet and a font from Font Awesome.
 *The font from Font Awesome is called "comments" which looks like a talking bubble as you can see displayed on the website once testimonials are applied.
 *We originally didn't enqueue Font Awesome and it worked. We realized our theme enqueued Font Awesome, which is why it was working on our theme but not other themes. This is when we realized that it needed to be enqueued in the functions file of our plugin in order to work across any theme.
 */
