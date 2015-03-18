@@ -1,8 +1,8 @@
-Thank you for downloading our plugin, Testimonials.
+Thank you for downloading our plugin.
 
-Upon installation and activation of the plugin, you will notice a new page on your WordPress dashboard titled "Testimonials."
+Upon installation and activation of the plugin, you will notice a new page on your WordPress dashboard titled "Testimonials" on the left hand side of your WordPress dashboard.
 
-Select "Testimonials" on the left hand side of your WordPress dashboard and simply click "Add New Testimonials" at the top of the page to access your testimonials posts. Once you click on "Add New Testimonials," type in reviews from your clients and style it how you want it to appear on your website.
+Once you click on "Testimonials" it will direct you to a page where you will be able to access all of your testimonial posts. Once you click on "Add New Testimonials," type in reviews from your clients and style it how you want it to appear on your website.
 
 In order for your testimonials to show up on your website, copy and paste the shortcode below onto the page you wish to show it:
 [testimonial posts_per_page="5" orderby="rand"]
