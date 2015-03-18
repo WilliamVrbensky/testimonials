@@ -11,6 +11,7 @@
 //The code below is used to enqueue our stylesheet.
 function testimonials_stylesheet() {
 	wp_enqueue_style( 'testimonials_css', plugins_url( '/style.css', __FILE__ ) );
+	wp_enqueue_style( 'hundope-fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
 }
 
 //This enables our stylesheet to bring in the style as indicated.
