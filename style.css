@@ -1,0 +1,21 @@
+/*
+*Modify this stylesheet if you want to add your own CSS to customize the way the client testimonials are displayed when using the get_testimonial() function or the archive template
+*/
+.testimonial {
+	position: relative;
+	font-size: 14px;
+}
+
+.testimonial .quote {
+	position: absolute;
+	padding-top: 10px;
+	font-size: 25px;
+	font-family: Georgia, serif;
+	line-height: 1;
+}
+
+div.entry-content {
+	padding-right: 0;
+	padding-left: 40px;
+}
+
