@@ -3,15 +3,13 @@
 *We gave the testimonials a reasonable font size, made our quote icon appear at a good size and also adjusted padding around content to look appropriate on any theme.
 */
 .testimonial {
-	position: relative;
 	font-size: 14px;
 }
 
 .testimonial .quote {
 	position: absolute;
-	padding-top: 10px;
-	font-size: 25px;
 	line-height: 1;
+	font-size: 25px;
 }
 
 div.entry-content {
