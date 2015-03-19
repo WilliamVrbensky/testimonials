@@ -2,9 +2,8 @@
 /*
 *Plugin Name: Testimonials
 *Plugin URI: http://phoenix.sheridanc.on.ca/~ccit2661/
-*Description: A plugin to display testimonials.
+*Description: A plugin to display customer testimonials.
 *Author: Elton Fernandes, William Vrbensky, Muhammad Farrukh
-*Author URI: http://phoenix.sheridanc.on.ca/~ccit2661/
 *Version: 1.0
 */
  
@@ -14,7 +13,7 @@
 */
 function testimonials_stylesheet() {
 	wp_enqueue_style( 'testimonials_css', plugins_url( '/style.css', __FILE__ ) );
-	wp_enqueue_style( 'hundope-fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
+	wp_enqueue_style( 'fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
 }
 
 //This enables our stylesheet to bring in the style as indicated.
@@ -29,7 +28,7 @@ add_action( 'init', 'testimonials_post_type' );
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
 
 /*
-*This function testimonial_post_type creates the custom post type
+*This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
 */
 function testimonials_post_type() {
@@ -47,8 +46,8 @@ function testimonials_post_type() {
 	);
 
 /*'dashicons-testimonial' menu icon retrieved from WordPress.org.
-*The register_post_type function registers the labels of the plugin as well as other items such as the location of the plugin and editable sections
-*The register_meta_box_cb registers the boxes in which the information/data can be viewed for each testimonial on the back-end of wordpress
+*The register_post_type function registers the labels of the plugin as well as other items such as the location of the plugin and editable sections.
+*The register_meta_box_cb registers the boxes in which the information/data can be viewed for each testimonial on the back-end of wordpress.
 */
 	register_post_type( 'testimonials', array(
 		'labels' => $labels,
@@ -149,7 +148,7 @@ function testimonials_edit_columns( $columns ) {
 add_action( 'manage_posts_custom_column', 'testimonials_columns', 10, 2 );
 
 /*
-*Customizing the list view columns
+*Customizing the list view columns.
 *This functions is attached to the 'manage_posts_custom_column' action hook.
 */
 function testimonials_columns( $column, $post_id ) {
@@ -163,19 +162,16 @@ function testimonials_columns( $column, $post_id ) {
 /*
 * The code below displays the testimonials on the front-end of the website.
 * The $post_per_page argument function acts as an operator which shows the number of testimonials you want to display.
-* The $orderby argument denotes the order in which the testimonials are displayed. In this case there is no order ("none").
+* The $orderby argument denotes the order in which the testimonials are displayed.
 * The $testimonial_id arg gives the ID of the testimonial(s).
 * 
 */
-function get_testimonial( $posts_per_page = 1, $orderby = 'none', $testimonial_id = null ) {
+function get_testimonial( $posts_per_page, $orderby ) {
 	$args = array(
-		'posts_per_page' => (int) $posts_per_page,
+		'posts_per_page' => $posts_per_page,
 		'post_type' => 'testimonials',
 		'orderby' => $orderby,
-		'no_found_rows' => true,
 	);
-	if ( $testimonial_id )
-		$args['post__in'] = array( $testimonial_id );
 
 	$query = new WP_Query( $args  );
 
@@ -198,13 +194,13 @@ function get_testimonial( $posts_per_page = 1, $orderby = 'none', $testimonial_i
 	return $testimonials;
 }
 
-add_shortcode( 'testimonial', 'testimonial_shortcode' );
-
 /*
 *Shortcode to display testimonials.
 *This functions is attached to the 'testimonial' action hook.
 *[testimonial posts_per_page="5" orderby="rand"]
 */
+add_shortcode( 'testimonial', 'testimonial_shortcode' );
+
 function testimonial_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'posts_per_page' => '5',
