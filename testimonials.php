@@ -22,10 +22,23 @@ add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
 //The add_action code below displays the testimonials post option on the WordPress dashboard.
 add_action( 'init', 'testimonials_post_type' );
 
-/*
-*The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
-*/
+//The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
+
+//The code belows calls our options.php file to include our adminstrations settings in our plugin.
+add_action('admin_menu', 'register_my_custom_submenu_page');
+
+function register_my_custom_submenu_page() {
+	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback' );
+}
+
+function my_custom_submenu_page_callback() {
+	
+	echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
+		echo '<h2>Options</h2>';
+	echo '</div>';
+
+}
 
 /*
 *This function testimonial_post_type creates the custom post type.
