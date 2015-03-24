@@ -30,6 +30,7 @@ add_action('admin_menu', 'register_my_custom_submenu_page');
 
 function register_my_custom_submenu_page() {
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback' );
+
 }
 
 function my_custom_submenu_page_callback() {
