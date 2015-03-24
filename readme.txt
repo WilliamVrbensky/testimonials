@@ -7,7 +7,7 @@ Click on "Testimonials" and it will direct you to a page where you can access al
 In order for your testimonials to show up on your website, copy and paste the shortcode below onto the page you wish to display it on:
 [testimonial posts_per_page="5" orderby="rand"]
 
-This will activate the testimonial posts that you made in the "Testimonials" tab on the WordPress dashboard. The shortcode is currently set to 5 testimonials per page and its order is set to random. You can specify how many testimonials you would like to show on the page by changing the number in the "post_per_page" variable. You can also change the specific order of your testimonial posts with the "orderby" variable. If you want the testimonial posts to have no specific order, type in "none". If you want to set its order to display the most recent posts at the top, type in "date". If you want to randomize the order, type in "rand".
+This will activate the testimonial posts that you made in the "Testimonials" tab on the WordPress dashboard. The shortcode is currently set to 5 testimonials per page and its order is set to random. You can specify how many testimonials you would like to show on the page by changing the number in the "post_per_page" variable. You can also change the specific order of your testimonial posts with the "orderby" variable. If you want to set its order to display the most recent posts at the top, type in "recent". If you want to randomize the order, type in "rand".
 
 We also give you the option to use our plugin as a widget. If you desire to do so, please follow these instructions:
 
