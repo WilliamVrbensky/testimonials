@@ -130,7 +130,7 @@ function testimonials_edit_columns( $columns ) {
 		'cb' => '<input type="checkbox" />',
 		'title' => 'Title',
 		'testimonial' => 'Testimonial',
-		'author' => 'Posted by',
+		'author' => 'Author',
 		'date' => 'Date'
 	);
 
