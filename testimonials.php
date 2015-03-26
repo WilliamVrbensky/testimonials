@@ -188,7 +188,10 @@ function testimonials_edit_columns( $columns ) {
 	return $columns;
 }
 
-//This hooks onto the function 'testiomonial_columns' and runs it.
+/*
+*This hooks onto the function 'testiomonial_columns' and runs it.
+*The code below manages testimonials column in the WordPress dashboard.
+*/
 add_action( 'manage_posts_custom_column', 'testimonials_columns', 10, 2 );
 
 /*
