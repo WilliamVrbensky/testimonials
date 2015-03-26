@@ -11,10 +11,12 @@ class testimonials_widget extends WP_Widget {
 		parent::__construct( 'testimonials_widget', 'Testimonials', $widget_ops );
 	}
 
-//The code below displays the testimonial widget on the sidebar on the front-end of the site
-//The code 'echoes' out or displays the data and information within in the widget before and after other widgets on the sidebar
-//The $posts_per_page arg contols how many testimonials can be seen at once on within the widget
-//The $order_by arg gives users the ability to order the testimonials by random, date, or default none
+/*
+*The code below displays the testimonial widget on the sidebar on the front-end of the site
+*The code 'echoes' out or displays the data and information within in the widget before and after other widgets on the sidebar
+*The $posts_per_page arg contols how many testimonials can be seen at once on within the widget
+*The $order_by arg gives users the ability to order the testimonials by random, date, or default none
+*/
 		public function widget( $args, $instance ) {
 		extract( $args );
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
@@ -41,18 +43,21 @@ class testimonials_widget extends WP_Widget {
 		return $instance;
 	}
 	
-//The form function below constructs the form in which you can select how you want to display the testimonials 
-//Title, the number of testimonials seen per page, along with the order in which they are displayed are all instances in this case
+/*
+*The form function below constructs the form in which you can select how you want to display the testimonials 
+*Title, the number of testimonials seen per page, along with the order in which they are displayed are all instances in this case
+*/
 	public function form( $instance ) {
-		//$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'posts_per_page' => '1', 'orderby' => 'none' ) );
 		$orderby = ( $instance['orderby'] );
 		$posts_per_page = $instance['posts_per_page'];
 		$title = ( $instance['title'] );
 ?>
 
 <?php
-//The code below labels each form function such as Title for $title, Number of Testimonials for $posts_per_page and Order By for $orderby
-//Under the orderby label, this code labels each selection for ordering the testimonials by None, Date, and Random
+/*
+*The code below labels each form function such as Title for $title, Number of Testimonials for $posts_per_page and Order By for $orderby
+*Under the orderby label, this code labels each selection for ordering the testimonials by None, Date, and Random
+*/
 ?>
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
@@ -61,7 +66,7 @@ class testimonials_widget extends WP_Widget {
 		<input class="widefat" id="<?php echo $this->get_field_id( 'posts_per_page' ); ?>" name="<?php echo $this->get_field_name( 'posts_per_page' ); ?>" type="text" value="<?php echo esc_attr( $posts_per_page ); ?>" />
 		</p>
 
-		<p><label for="<?php echo $this->get_field_id( 'orderby' ); ?>">Order By</label>
+		<p><label for="<?php echo $this->get_field_id( 'orderby' ); ?>">Order:</label>
 		<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
 			<option value="recent" <?php selected( $orderby, 'recent' ); ?>>Recent</option>
 			<option value="rand" <?php selected( $orderby, 'rand' ); ?>>Random</option>
