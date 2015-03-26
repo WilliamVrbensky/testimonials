@@ -101,6 +101,7 @@ add_filter('the_content', 'testimonials_callit');
 /*
 *This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
+*The array items below will display what we want it to say under the testimonials page. For example, whatever you put next to the add_new array will show in the button at the top of testimonials page.
 */
 function testimonials_post_type() {
 	$labels = array(
