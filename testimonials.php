@@ -28,17 +28,75 @@ include( dirname( __FILE__ ) . '/testimonials_widget.php' );
 //The code belows calls our testimonials.php file to include our adminstrations settings in our plugin.
 add_action('admin_menu', 'register_my_custom_submenu_page');
 
+//The code below registers the submenu page under our testimonials button inside the WordPress dashboard.
 function register_my_custom_submenu_page() {
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my-custom-submenu-page', 'my_custom_submenu_page_callback' );
-
 }
 
-//The code below links to our register submenu function in order to display the title on our options page that we named as Options. 
+//The code below links to our register submenu function in order to display the title on our options. We named it Options. 
 function my_custom_submenu_page_callback() {
-	echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
 		echo '<h2>Options</h2>';
-	echo '</div>';
 }
+
+/*
+//The code below is our attempt at trying to register our options page.
+function testimonials_settings_init() {
+
+register_setting( 'my-custom-submenu-page','testimonials_settings' );
+
+//This is adding the action to set our options page within the submenu page called options.
+add_settings_section('options_page_section', __( 'Your section description', 'testimonials' ), 'my_custom_submenu_page_callback','my_custom_submenu_page');
+
+//We are trying to add a field to display on the options page.
+add_settings_field(
+'testimonials_select_field_4', __( 'Settings field description', 'testimonials' ), 'testimonials_select_field_4_render', 'my-custom-submenu-page', 'my-custom-submenu-page-section'
+);
+}
+
+//The function below should be the content on the options page to show a dropdown menu.
+function testimonials_select_field_4_render() {
+$options = get_option( 'testimonials_settings' );
+?>
+<select name="testimonials_settings[testimonials_select_field_4]">
+<option value="1" <?php if (isset($options
+['testimonials_select_field_4'])) selected( $options
+['testimonials_select_field_4'], 1 ); ?>>Red</option>
+<option value="2" <?php if (isset($options
+['testimonials_select_field_4'])) selected( $options
+['testimonials_select_field_4'], 2 ); ?>>Blue</option>
+</select>
+<?php
+}
+
+function
+testimonials_settings_section_callback() {
+echo __( 'More of a description and
+detail about the section.', 'codediva' );
+}
+
+function testimonials_options_page(){
+?>
+<form action="/edit.php?post_type=testimonials&page=my-custom-submenu-page" method="post">
+<h2>My Awesome Plugin</h2>
+<?php
+settings_fields( 'plugin_page' );
+do_settings_sections( 'plugin_page' );
+submit_button();
+?>
+</form>
+<?php
+}
+
+add_action( 'admin_init',
+'testimonials_settings_init' );
+
+function testimonials_callit(){
+$options = get_option( 'testimonials_settings' );
+echo '<p>Select: ' . $options['cd_awesome_select_field_4'] . '</p>';
+}
+
+add_filter('the_content', 'testimonials_callit');
+*/
 
 /*
 *This function testimonial_post_type creates the custom post type.
@@ -101,8 +159,8 @@ function testimonials_form() {
 add_action( 'save_post', 'testimonials_save_post' );
 
 /*
-*Data validation and saving.
-*This functions is attached to the 'save_post' action hook.
+*The code below enables our posts to be saved.
+*This function is attached to the 'save_post' action hook.
 */
 function testimonials_save_post( $post_id ) {
 	if ( ! empty( $_POST['testimonials'] ) && ! wp_verify_nonce( $_POST['testimonials'], 'testimonials' ) )
@@ -141,7 +199,7 @@ function testimonials_edit_columns( $columns ) {
 add_action( 'manage_posts_custom_column', 'testimonials_columns', 10, 2 );
 
 /*
-*Customizes the list view columns.
+*The code below customizes our testimonials' columns in list view.
 *This functions is attached to the 'manage_posts_custom_column' action hook.
 */
 function testimonials_columns( $column, $post_id ) {
@@ -187,7 +245,7 @@ function get_testimonial( $posts_per_page, $orderby ) {
 }
 
 /*
-*Shortcode to display testimonials.
+*The code below enables a shortcode to input into different pages in order to display the testimonials posted.
 *This functions is attached to the 'testimonial' action hook.
 *[testimonial posts_per_page="5" orderby="rand"]
 */
