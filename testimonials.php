@@ -21,56 +21,10 @@ add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
 add_action( 'init', 'testimonials_post_type' );
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
-<<<<<<< HEAD
 function cd_awesome_add_admin_menu(  ) { 
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
 	
 }
-=======
-
-function cd_awesome_add_admin_menu(  ) { 
-
-	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
-	
-}
-
-function cd_awesome_settings_init(  ) { 
-
-	register_setting( 'plugin_page', 'cd_awesome_settings' );
-	
-	add_settings_section(
-		'cd_awesome_plugin_page_section', 
-		__( 'Description', 'codediva' ), 
-		'cd_awesome_settings_section_callback', 
-		'plugin_page'
-	);
-
-	add_settings_field( 
-		'cd_awesome_select_field_4', 
-		__( 'Choose a colour from the dropdown:', 'codediva' ), 
-		'cd_awesome_select_field_4_render', 
-		'plugin_page', 
-		'cd_awesome_plugin_page_section' 
-	);
-
-}
-
-function cd_awesome_select_field_4_render() { 
-	$options = get_option( 'cd_awesome_settings' );
-	?>
-	<select name="cd_awesome_settings[cd_awesome_select_field_4]">
-	<option value="1" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 1 ); ?>>Blue</option>
-	<option value="2" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 2 ); ?>>Red</option>
-	<option value="3" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 3 ); ?>>Green</option>
-	</select>
-<?php
-}
-
-
-
-
-/*
->>>>>>> origin/master
 //The code below is our attempt at trying to register our options page and construct it under the options submenu.
 function cd_awesome_settings_init(  ) { 
 	register_setting( 'plugin_page', 'cd_awesome_settings' );
@@ -83,7 +37,6 @@ function cd_awesome_settings_init(  ) {
 		'plugin_page'
 	);
 //We are trying to add a field to display on the options page.
-<<<<<<< HEAD
 	add_settings_field( 
 		'cd_awesome_select_field_4', 
 		__( 'Choose a colour from the dropdown:', 'codediva' ), 
@@ -91,14 +44,8 @@ function cd_awesome_settings_init(  ) {
 		'plugin_page', 
 		'cd_awesome_plugin_page_section' 
 	);
-=======
-add_settings_field(
-'testimonials_select_field', __( 'Settings field description', 'testimonials' ), 'testimonials_select_field_render', 'options_page', 'options_section'
-);
->>>>>>> origin/master
 }
 //The function below should be the content on the options page to show a dropdown menu.
-<<<<<<< HEAD
 function cd_awesome_select_field_4_render() { 
 	$options = get_option( 'cd_awesome_settings' );
 	?>
@@ -107,45 +54,6 @@ function cd_awesome_select_field_4_render() {
 	<option value="2" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 2 ); ?>>Red</option>
 	<option value="3" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 3 ); ?>>Green</option>
 	</select>
-=======
-function testimonials_select_field_render() {
-$options = get_option( 'testimonials_settings' );
-?>
-<select name="testimonials_settings[testimonials_select_field]">
-<option value="1" <?php if (isset($options
-['testimonials_select_field'])) selected( $options
-['testimonials_select_field'], 1 ); ?>>Red</option>
-<option value="2" <?php if (isset($options
-['testimonials_select_field'])) selected( $options
-['testimonials_select_field'], 2 ); ?>>Blue</option>
-</select>
-<?php
-}
-
-add_action( 'admin_init','testimonials_settings_init' );
-
-function testimonials_callit(){
-$options = get_option( 'testimonials_settings' );
-echo '<p>Select: ' . $options['testimonials_select_field'] . '</p>';
-}
-
-function
-testimonials_settings_section_callback() {
-echo __( 'More of a description and
-detail about the section.', 'testimonials' );
-}
-
-function testimonials_options_page(){
-?>
-<form action="options.php" method="post">
-<h2>Testimonials</h2>
-<?php
-settings_fields( 'options_page' );
-do_settings_sections( 'options_page' );
-submit_button();
-?>
-</form>
->>>>>>> origin/master
 <?php
 }
 function cd_awesome_settings_section_callback() { 
