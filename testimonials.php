@@ -21,43 +21,43 @@ add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
 add_action( 'init', 'testimonials_post_type' );
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
-function cd_awesome_add_admin_menu(  ) { 
+function testimonials_add_admin_menu(  ) { 
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
 	
 }
 //The code below is our attempt at trying to register our options page and construct it under the options submenu.
-function cd_awesome_settings_init(  ) { 
-	register_setting( 'plugin_page', 'cd_awesome_settings' );
+function hundope_settings_init(  ) { 
+	register_setting( 'options_page', 'hundope_settings' );
 	
 //This is adding the action to set our options page within the submenu page called options.
 	add_settings_section(
-		'cd_awesome_plugin_page_section', 
-		__( 'Description', 'codediva' ), 
-		'cd_awesome_settings_section_callback', 
-		'plugin_page'
+		'options_page_section', 
+		__( 'Description', 'hundope' ), 
+		'hundope_settings_section_callback', 
+		'options_page'
 	);
 //We are trying to add a field to display on the options page.
 	add_settings_field( 
-		'cd_awesome_select_field_4', 
-		__( 'Choose a colour from the dropdown:', 'codediva' ), 
-		'cd_awesome_select_field_4_render', 
-		'plugin_page', 
-		'cd_awesome_plugin_page_section' 
+		'hundope_select_field', 
+		__( 'Choose a colour from the dropdown:', 'hundope' ), 
+		'hundope_select_field_render', 
+		'options_page', 
+		'options_page_section' 
 	);
 }
 //The function below should be the content on the options page to show a dropdown menu.
-function cd_awesome_select_field_4_render() { 
-	$options = get_option( 'cd_awesome_settings' );
+function hundope_select_field_render() { 
+	$options = get_option( 'hundope_settings' );
 	?>
-	<select name="cd_awesome_settings[cd_awesome_select_field_4]">
-	<option value="1" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 1 ); ?>>Blue</option>
-	<option value="2" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 2 ); ?>>Red</option>
-	<option value="3" <?php if (isset($options['cd_awesome_select_field_4'])) selected( $options['cd_awesome_select_field_4'], 3 ); ?>>Green</option>
+	<select name="hundope_settings[hundope_select_field]">
+	<option value="1" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>Blue</option>
+	<option value="2" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Red</option>
+	<option value="3" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Green</option>
 	</select>
 <?php
 }
-function cd_awesome_settings_section_callback() { 
-	echo __( 'Select a colour that you would like to make the testimonial posts.', 'codediva' );
+function hundope_settings_section_callback() { 
+	echo __( 'Select a colour that you would like to make the testimonial posts.', 'hundope' );
 }
 function my_awesome_plugin_options_page() { 
 	?>
@@ -66,16 +66,16 @@ function my_awesome_plugin_options_page() {
 		<h2>Options Page</h2>
 		
 		<?php
-		settings_fields( 'plugin_page' );
-		do_settings_sections( 'plugin_page' );
+		settings_fields( 'options_page' );
+		do_settings_sections( 'options_page' );
 		submit_button();
 		?>
 		
 	</form>
 	<?php
 }
-add_action( 'admin_menu', 'cd_awesome_add_admin_menu' );
-add_action( 'admin_init', 'cd_awesome_settings_init' );	
+add_action( 'admin_menu', 'testimonials_add_admin_menu' );
+add_action( 'admin_init', 'hundope_settings_init' );	
 /*
 *This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
