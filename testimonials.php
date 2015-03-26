@@ -3,7 +3,7 @@
 *Plugin Name: Testimonials
 *Plugin URI: http://phoenix.sheridanc.on.ca/~ccit2661/
 *Description: A plugin to display customer testimonials.
-*Author: Elton Fernandes, William Vrbensky, and Muhammad Farrukh
+*Author: Elton Fernandes, William Vrbensky, Muhammad Farrukh
 *Version: 1.0
 */
  
@@ -41,49 +41,29 @@ function my_custom_submenu_page_callback() {
 /*
 //The code below is our attempt at trying to register our options page.
 function testimonials_settings_init() {
-
-register_setting( 'my-custom-submenu-page','testimonials_settings' );
+register_setting( 'options_page','testimonials_settings' );
 
 //This is adding the action to set our options page within the submenu page called options.
-add_settings_section('options_page_section', __( 'Your section description', 'testimonials' ), 'my_custom_submenu_page_callback','my_custom_submenu_page');
+add_settings_section('options_section', __( 'Your section description', 'testimonials' ), 'my_custom_submenu_page_callback','options_page');
 
 //We are trying to add a field to display on the options page.
 add_settings_field(
-'testimonials_select_field_4', __( 'Settings field description', 'testimonials' ), 'testimonials_select_field_4_render', 'my-custom-submenu-page', 'my-custom-submenu-page-section'
+'testimonials_select_field', __( 'Settings field description', 'testimonials' ), 'testimonials_select_field_4_render', 'options_page', 'options_section'
 );
 }
 
 //The function below should be the content on the options page to show a dropdown menu.
-function testimonials_select_field_4_render() {
+function testimonials_select_field_render() {
 $options = get_option( 'testimonials_settings' );
 ?>
-<select name="testimonials_settings[testimonials_select_field_4]">
+<select name="testimonials_settings[testimonials_select_field]">
 <option value="1" <?php if (isset($options
-['testimonials_select_field_4'])) selected( $options
-['testimonials_select_field_4'], 1 ); ?>>Red</option>
+['testimonials_select_field'])) selected( $options
+['testimonials_select_field'], 1 ); ?>>Red</option>
 <option value="2" <?php if (isset($options
-['testimonials_select_field_4'])) selected( $options
-['testimonials_select_field_4'], 2 ); ?>>Blue</option>
+['testimonials_select_field'])) selected( $options
+['testimonials_select_field'], 2 ); ?>>Blue</option>
 </select>
-<?php
-}
-
-function
-testimonials_settings_section_callback() {
-echo __( 'More of a description and
-detail about the section.', 'codediva' );
-}
-
-function testimonials_options_page(){
-?>
-<form action="/edit.php?post_type=testimonials&page=my-custom-submenu-page" method="post">
-<h2>My Awesome Plugin</h2>
-<?php
-settings_fields( 'plugin_page' );
-do_settings_sections( 'plugin_page' );
-submit_button();
-?>
-</form>
 <?php
 }
 
@@ -92,7 +72,26 @@ add_action( 'admin_init',
 
 function testimonials_callit(){
 $options = get_option( 'testimonials_settings' );
-echo '<p>Select: ' . $options['cd_awesome_select_field_4'] . '</p>';
+echo '<p>Select: ' . $options['testimonials_select_field'] . '</p>';
+}
+
+function
+testimonials_settings_section_callback() {
+echo __( 'More of a description and
+detail about the section.', 'testimonials' );
+}
+
+function testimonials_options_page(){
+?>
+<form action="edit.php?post_type=testimonials" method="post">
+<h2>Testimonials</h2>
+<?php
+settings_fields( 'options_page' );
+do_settings_sections( 'options_page' );
+submit_button();
+?>
+</form>
+<?php
 }
 
 add_filter('the_content', 'testimonials_callit');
@@ -120,7 +119,7 @@ function testimonials_post_type() {
 /*
 *'dashicons-testimonial' menu icon retrieved from WordPress.org.
 *The register_post_type function registers the labels of the plugin as well as other items such as the location of the plugin and editable sections.
-*The register_meta_box_cb registers the boxes in which the information/data can be viewed for each testimonial on the back-end of wordpress.
+*The register_meta_box_cb registers the boxes in which the information/data can be viewed for each testimonial on the back-end of WordPress.
 */
 	register_post_type( 'testimonials', array(
 		'labels' => $labels,
