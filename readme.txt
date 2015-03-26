@@ -11,7 +11,7 @@ This will activate the testimonial posts that you made in the "Testimonials" tab
 
 We also give you the option to use our plugin as a widget. If you desire to do so, please follow these instructions:
 
-Select Widgets under Appearances on the left hand side of your WordPress dashboard. You will see our widget called "Testimonials" under available widgets. Drag and drop "Testimonials" over to your desired widget area. Now click on "Testimonials" to add a title of your choice that you want to see on the widget and enter the desired amount of testimonials you wish to display on the widget. You can then select whether you want the widget to order your testimonials in a recent order to show the most recent posted testimonials or in a random order to randomize its order.
+Select Widgets under Appearances on the left hand side of your WordPress dashboard. You will see our widget called "Testimonials" under available widgets. Drag and drop "Testimonials" over to your desired widget area. Now click on the testimonials widget and under "Title" you are able to add a title of your choice that you want to show up on the widget on your website. On the "Number of Testimonials" text box, enter the desired amount of testimonials you wish to display on the widget. Under the "Order" drop-down menu, you can select whether you want the widget to order your testimonials in a recent order to show the most recent posted testimonials or in a random order to randomize its order.
 
 Click save and you will see your client testimonials on your website's widget area that  you put it under.
 
