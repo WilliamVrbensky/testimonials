@@ -3,11 +3,11 @@
 *Plugin Name: Testimonials
 *Plugin URI: http://phoenix.sheridanc.on.ca/~ccit2661/
 *Description: A plugin to display customer testimonials.
-*Author: Elton Fernandes, William Vrbensky, Muhammad Farrukh
+*Author: Elton Fernandes, William Vrbensky, and Muhammad Farrukh
 *Version: 1.0
 */
  
-/*The code below is used to enqueue our css stylesheet and a font from Font Awesome.
+/*The code below is used to enqueue our css stylesheet and a font taken from Font Awesome.
 *The font from Font Awesome is called "comments" which looks like a talking bubble as you can see displayed on the website once testimonials are applied.
 *We originally didn't enqueue Font Awesome and it worked. We realized our theme enqueued Font Awesome, which is why it was working on our theme but not other themes. This is when we realized that it needed to be enqueued in the functions file of our plugin in order to work across any theme.
 */
@@ -16,7 +16,7 @@ function testimonials_stylesheet() {
 	wp_enqueue_style( 'fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
 }
 
-//This enables our stylesheet to bring in the style as indicated.
+//The code below adds the action to bring in our two styles enqueued as indicated above.
 add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
 
 //The add_action code below displays the testimonials post option on the WordPress dashboard.
@@ -25,7 +25,7 @@ add_action( 'init', 'testimonials_post_type' );
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
 
-//The code belows calls our options.php file to include our adminstrations settings in our plugin.
+//The code belows calls our testimonials.php file to include our adminstrations settings in our plugin.
 add_action('admin_menu', 'register_my_custom_submenu_page');
 
 function register_my_custom_submenu_page() {
@@ -33,12 +33,11 @@ function register_my_custom_submenu_page() {
 
 }
 
+//The code below links to our register submenu function in order to display the title on our options page that we named as Options. 
 function my_custom_submenu_page_callback() {
-	
 	echo '<div class="wrap"><div id="icon-tools" class="icon32"></div>';
 		echo '<h2>Options</h2>';
 	echo '</div>';
-
 }
 
 /*
@@ -59,7 +58,8 @@ function testimonials_post_type() {
 		'not_found_in_trash' => 'No Testimonials found in the trash',
 	);
 
-/*'dashicons-testimonial' menu icon retrieved from WordPress.org.
+/*
+*'dashicons-testimonial' menu icon retrieved from WordPress.org.
 *The register_post_type function registers the labels of the plugin as well as other items such as the location of the plugin and editable sections.
 *The register_meta_box_cb registers the boxes in which the information/data can be viewed for each testimonial on the back-end of wordpress.
 */
@@ -97,9 +97,7 @@ function testimonials_form() {
 	wp_nonce_field( 'testimonials', 'testimonials' );	
 }
 
-/* 
-*This hooks the function of saving the testimonial posts, and runs the function of saving it. 
-*/
+//This hooks the function of saving the testimonial posts, and runs the function of saving it. 
 add_action( 'save_post', 'testimonials_save_post' );
 
 /*
@@ -107,9 +105,6 @@ add_action( 'save_post', 'testimonials_save_post' );
 *This functions is attached to the 'save_post' action hook.
 */
 function testimonials_save_post( $post_id ) {
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
-		return;
-
 	if ( ! empty( $_POST['testimonials'] ) && ! wp_verify_nonce( $_POST['testimonials'], 'testimonials' ) )
 		return;
 
@@ -120,23 +115,9 @@ function testimonials_save_post( $post_id ) {
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 	}
-
-	if ( ! wp_is_post_revision( $post_id ) && 'testimonials' == get_post_type( $post_id ) ) {
-		remove_action( 'save_post', 'testimonials_save_post' );
-		add_action( 'save_post', 'testimonials_save_post' );
-	}
-
-	if ( ! empty( $_POST['testimonial'] ) ) {
-	
-		update_post_meta( $post_id, '_testimonial');
-	} else {
-		delete_post_meta( $post_id, '_testimonial' );
-	}
 }
 
-/*
-*This action hooks the function 'testimonials_edit_columns' and allows you to edit the testimonial based on each column.
-*/
+//This action hooks the function 'testimonials_edit_columns' and allows you to edit the testimonial based on each column.
 add_filter( 'manage_edit-testimonials_columns', 'testimonials_edit_columns' );
 
 /*
@@ -156,13 +137,11 @@ function testimonials_edit_columns( $columns ) {
 	return $columns;
 }
 
-/*
-*This hooks onto the function 'testiomonial_columns' and runs it.
-*/
+//This hooks onto the function 'testiomonial_columns' and runs it.
 add_action( 'manage_posts_custom_column', 'testimonials_columns', 10, 2 );
 
 /*
-*Customizing the list view columns.
+*Customizes the list view columns.
 *This functions is attached to the 'manage_posts_custom_column' action hook.
 */
 function testimonials_columns( $column, $post_id ) {
@@ -178,7 +157,6 @@ function testimonials_columns( $column, $post_id ) {
 * The $post_per_page argument function acts as an operator which shows the number of testimonials you want to display.
 * The $orderby argument denotes the order in which the testimonials are displayed.
 * The $testimonial_id arg gives the ID of the testimonial(s).
-* 
 */
 function get_testimonial( $posts_per_page, $orderby ) {
 	$args = array(
