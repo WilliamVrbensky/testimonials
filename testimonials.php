@@ -161,18 +161,11 @@ add_action( 'save_post', 'testimonials_save_post' );
 /*
 *The code below enables our posts to be saved.
 *This function is attached to the 'save_post' action hook.
+*The code below tells the plugin to save each post when you click on save.
 */
 function testimonials_save_post( $post_id ) {
 	if ( ! empty( $_POST['testimonials'] ) && ! wp_verify_nonce( $_POST['testimonials'], 'testimonials' ) )
 		return;
-
-	if ( ! empty( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
-		if ( ! current_user_can( 'edit_page', $post_id ) )
-			return;
-	} else {
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
-	}
 }
 
 //This action hooks the function 'testimonials_edit_columns' and allows you to edit the testimonial based on each column.
