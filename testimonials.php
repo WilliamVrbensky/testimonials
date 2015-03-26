@@ -39,7 +39,7 @@ function my_custom_submenu_page_callback() {
 }
 
 /*
-//The code below is our attempt at trying to register our options page.
+//The code below is our attempt at trying to register our options page and construct it under the options submenu.
 function testimonials_settings_init() {
 register_setting( 'options_page','testimonials_settings' );
 
