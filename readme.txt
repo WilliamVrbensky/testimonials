@@ -1,3 +1,11 @@
+Link to the website where we applied our plugin:
+
+http://phoenix.sheridanc.on.ca/~ccit2661/
+
+Link to the GitHub directory to view our contributions:
+
+https://github.com/WilliamVrbensky/testimonials.git
+
 Thank you for downloading our plugin.
 
 Upon installation and activation of the plugin, you will notice a new page on your WordPress dashboard titled "Testimonials" on the left hand side of your WordPress dashboard.
