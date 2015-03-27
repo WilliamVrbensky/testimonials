@@ -7,7 +7,8 @@
 *Version: 1.0
 */
  
-/*The code below is used to enqueue our css stylesheet and a font taken from Font Awesome.
+/*
+*The code below is used to enqueue our css stylesheet and a font taken from Font Awesome.
 *The font from Font Awesome is called "comments" which looks like a talking bubble as you can see displayed on the website once testimonials are applied.
 *We originally didn't enqueue Font Awesome and it worked. We realized our theme enqueued Font Awesome, which is why it was working on our theme but not other themes. This is when we realized that it needed to be enqueued in the functions file of our plugin in order to work across any theme.
 */
@@ -24,20 +25,14 @@ add_action( 'init', 'testimonials_post_type' );
 
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 //The code below adds the submenu under our testimonials page inside of the WordPress dashboard. We took a snippet of the URL since it is a custom post type in order for our options menu to show up under the testimonials page.
 function testimonials_add_admin_menu(  ) { 
 
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
 	
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 //The code below registers the settings to make them show up under our options page.
 function hundope_settings_init(  ) { 
 
@@ -50,10 +45,7 @@ function hundope_settings_init(  ) {
 		'hundope_settings_section_callback', 
 		'options_page'
 	);
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 //The code below adds the settings field to make our dropdown menu show up.
 	add_settings_field( 
 		'hundope_select_field', 
@@ -64,10 +56,7 @@ function hundope_settings_init(  ) {
 	);
 
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 //The function below should be the content on the options page to show a dropdown menu. Our goal was to let users select which colour to make the testimonial posts.
 function hundope_select_field_render() { 
 	
@@ -86,7 +75,7 @@ function my_awesome_plugin_options_page() {
 		<?php
 		settings_fields( 'options_page' );
 		do_settings_sections( 'options_page' );
-		//The code below defines and physically calls  the dropdown menu from the register settings.
+//The code below defines and physically calls  the dropdown menu from the register settings.
 		$options = get_option( 'hundope_settings' );
 	?>
 	<select name="hundope_settings[hundope_select_field]">
@@ -101,7 +90,7 @@ function my_awesome_plugin_options_page() {
 	</select>
 		
 		<?php
-		//The code below enables the save changes button to be available and save the indicated colour change.
+//The code below enables the save changes button to be available and save the indicated colour change.
 		submit_button();
 		?>
 				
@@ -112,11 +101,8 @@ return $options;
 
 add_action( 'admin_menu', 'testimonials_add_admin_menu' );
 add_action( 'admin_init', 'hundope_settings_init' );
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/master
 /*
 *This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
@@ -238,19 +224,11 @@ function get_testimonial( $posts_per_page, $orderby ) {
 		'post_type' => 'testimonials',
 		'orderby' => $orderby
 	);
-<<<<<<< HEAD
+
 //The options argument pulls the option of grabing each specific colour that's indicated in the select field.
 	$options = get_option( 'hundope_settings' );
 	
-/*
-*We decided to do an inline style. If we were to do the style in a css stylesheet, the change for colours would not physically show up on the front end of our site. 
-*/
-=======
-
-	//The options argument pulls the option of grabing each specific colour that's indicated in the select field.
-	$options = get_option( 'hundope_settings' );
-	
->>>>>>> origin/master
+//We decided to do an inline style. If we were to do the style in a css stylesheet, the change for colours would not physically show up on the front end of our site. 
 	$query = new WP_Query( $args  );
 	$testimonials = '';
 	if ( $query->have_posts() ) {
