@@ -74,14 +74,14 @@ function my_awesome_plugin_options_page() {
 		<?php
 		settings_fields( 'options_page' );
 		do_settings_sections( 'options_page' );
-		
+		//The code below defines and physically calls  the dropdown menu from the register settings.
 		$options = get_option( 'hundope_settings' );
 	?>
 	<select name="hundope_settings[hundope_select_field]">
-	<option value="none" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>None</option>		
+	<option value="none" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1, ); ?>>None</option>		
 	<option value="black" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Black</option>
 	<option value="blue" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Blue</option>
-	<option value="red" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
+	<option value="Red" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
 	<option value="green" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 5 ); ?>>Green</option>
 	<option value="yellow" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 6 ); ?>>Yellow</option>
 	<option value="purple" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 7 ); ?>>Purple</option>
@@ -90,6 +90,7 @@ function my_awesome_plugin_options_page() {
 		
 		<?php
 		echo $options['hundope_select_field'];
+		//The code below enables the save changes button to be available and save the indicated colour change.
 		submit_button();
 		?>
 			
@@ -224,21 +225,23 @@ function get_testimonial( $posts_per_page, $orderby ) {
 		'orderby' => $orderby
 	);
 
+	//The options argument pulls the option of grabing each specific colour that's indicated in the select field.
 	$options = get_option( 'hundope_settings' );
 	
 	$query = new WP_Query( $args  );
 	$testimonials = '';
 	if ( $query->have_posts() ) {
 		while ( $query->have_posts() ) : $query->the_post();
-			$post_id = get_the_ID();
-			$testimonials .= '<aside class="testimonial">';
-			$testimonials .= '<span class="quote"><i class="fa fa-comments"></i></span>';
-			$testimonials .= '<div class="entry-content">';
-			//The code below calls our options variable to get the colour indicated in the select field.
-			$testimonials .= '<p class="testimonial-text" style="color:' . $options['hundope_select_field'] . ';" >' . get_the_content() . '</p>';
-			$testimonials .= '<p class="testimonial-name"></p>';
-			$testimonials .= '</div>';
-			$testimonials .= '</aside>';
+		$post_id = get_the_ID();
+		$testimonials .= '<aside class="testimonial">';
+		//The code below calls the options variable to indicate the colour in the select field and apply it towards our testimonial quote icon.
+		$testimonials .= '<span class="quote"><i class="fa fa-comments" style="color:' . $options['hundope_select_field'] . ';"></i></span>';
+		$testimonials .= '<div class="entry-content">';
+		//The code below calls our options variable to get the colour indicated in the select field and apply it onto the text.
+		$testimonials .= '<p class="testimonial-text" style="color:' . $options['hundope_select_field'] . ';" >' . get_the_content() . '</p>';
+		$testimonials .= '<p class="testimonial-name"></p>';
+		$testimonials .= '</div>';
+		$testimonials .= '</aside>';
 		endwhile;
 		wp_reset_postdata();
 		
