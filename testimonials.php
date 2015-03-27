@@ -15,28 +15,37 @@ function testimonials_stylesheet() {
 	wp_enqueue_style( 'testimonials_css', plugins_url( '/style.css', __FILE__ ) );
 	wp_enqueue_style( 'fontawesome', 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' );
 }
+
 //The code below adds the action to bring in our two styles enqueued as indicated above.
 add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
+
 //The add_action code below displays the testimonials post option on the WordPress dashboard.
 add_action( 'init', 'testimonials_post_type' );
+
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
+
+//The code below adds the submenu under our testimonials page inside of the WordPress dashboard. We took a snippet of the URL since it is a custom post type in order for our options menu to show up under the testimonials page.
 function testimonials_add_admin_menu(  ) { 
+
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
 	
 }
-//The code below is our attempt at trying to register our options page and construct it under the options submenu.
+
+//The code below registers the settings to make them show up under our options page.
 function hundope_settings_init(  ) { 
+
 	register_setting( 'options_page', 'hundope_settings' );
 	
-//This is adding the action to set our options page within the submenu page called options.
+//We indicated the title to be description in the options page.
 	add_settings_section(
 		'options_page_section', 
 		__( 'Description', 'hundope' ), 
 		'hundope_settings_section_callback', 
 		'options_page'
 	);
-//We are trying to add a field to display on the options page.
+
+//The code below adds the settings field to make our dropdown menu show up.
 	add_settings_field( 
 		'hundope_select_field', 
 		__( 'Choose a colour from the dropdown:', 'hundope' ), 
@@ -44,38 +53,55 @@ function hundope_settings_init(  ) {
 		'options_page', 
 		'options_page_section' 
 	);
+
 }
-//The function below should be the content on the options page to show a dropdown menu.
+
+//The function below should be the content on the options page to show a dropdown menu. Our goal was to let users select which colour to make the testimonial posts.
 function hundope_select_field_render() { 
-	$options = get_option( 'hundope_settings' );
-	?>
-	<select name="hundope_settings[hundope_select_field]">
-	<option value="1" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>Blue</option>
-	<option value="2" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Red</option>
-	<option value="3" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Green</option>
-	</select>
-<?php
+	
 }
+
 function hundope_settings_section_callback() { 
 	echo __( 'Select a colour that you would like to make the testimonial posts.', 'hundope' );
 }
+
 function my_awesome_plugin_options_page() { 
+
 	?>
 	<form action="options.php" method="post">
 		
 		<h2>Options Page</h2>
-		
 		<?php
 		settings_fields( 'options_page' );
 		do_settings_sections( 'options_page' );
+		
+		$options = get_option( 'hundope_settings' );
+	?>
+	<select name="hundope_settings[hundope_select_field]">
+	<option value="none" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>None</option>		
+	<option value="black" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Black</option>
+	<option value="blue" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Blue</option>
+	<option value="red" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
+	<option value="green" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 5 ); ?>>Green</option>
+	<option value="yellow" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 6 ); ?>>Yellow</option>
+	<option value="purple" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 7 ); ?>>Purple</option>
+	<option value="brown" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 8 ); ?>>Brown</option>
+	</select>
+		
+		<?php
+		echo $options['hundope_select_field'];
 		submit_button();
 		?>
-		
+			
 	</form>
 	<?php
+return $options;
 }
+
 add_action( 'admin_menu', 'testimonials_add_admin_menu' );
-add_action( 'admin_init', 'hundope_settings_init' );	
+add_action( 'admin_init', 'hundope_settings_init' );
+
+
 /*
 *This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
@@ -94,6 +120,7 @@ function testimonials_post_type() {
 		'not_found' =>  'No Testimonials found',
 		'not_found_in_trash' => 'No Testimonials found in the trash',
 	);
+
 /*
 *'dashicons-testimonial' menu icon retrieved from WordPress.org.
 *The register_post_type function registers the labels of the plugin as well as other items such as the location of the plugin and editable sections.
@@ -115,6 +142,7 @@ function testimonials_post_type() {
 		'register_meta_box_cb' => 'testimonials_meta_boxes',
 	) );
 }
+
 /*
 *This function adds the necessary metabox
 *This function is attached to the 'testimonials_post_type()' meta box, and visualizes the testimonial each customer has provided
@@ -122,6 +150,7 @@ function testimonials_post_type() {
 function testimonials_meta_boxes() {
 	add_meta_box( 'testimonials_form', 'testimonials', 'normal', 'high' );
 }
+
 /*
 *Adding the necessary metabox.
 *This functions is attached to the 'add_meta_box()' callback.
@@ -130,8 +159,10 @@ function testimonials_form() {
 	$post_id = get_the_ID();
 	wp_nonce_field( 'testimonials', 'testimonials' );	
 }
+
 //This hooks the function of saving the testimonial posts, and runs the function of saving it. 
 add_action( 'save_post', 'testimonials_save_post' );
+
 /*
 *The code below enables our posts to be saved.
 *This function is attached to the 'save_post' action hook.
@@ -141,8 +172,10 @@ function testimonials_save_post( $post_id ) {
 	if ( ! empty( $_POST['testimonials'] ) && ! wp_verify_nonce( $_POST['testimonials'], 'testimonials' ) )
 		return;
 }
+
 //This action hooks the function 'testimonials_edit_columns' and allows you to edit the testimonial based on each column.
 add_filter( 'manage_edit-testimonials_columns', 'testimonials_edit_columns' );
+
 /*
 *The code below modifies/edits the columns for already existing testimonials.
 *This functions is attached to the 'manage_edit-testimonials_columns' filter hook. It is arranged in an array of each specific column.
@@ -156,13 +189,16 @@ function testimonials_edit_columns( $columns ) {
 		'author' => 'Author',
 		'date' => 'Date'
 	);
+
 	return $columns;
 }
+
 /*
 *This hooks onto the function 'testiomonial_columns' and runs it.
 *The code below manages testimonials column in the WordPress dashboard.
 */
 add_action( 'manage_posts_custom_column', 'testimonials_columns', 10, 2 );
+
 /*
 *The code below customizes our testimonials' columns in list view.
 *This functions is attached to the 'manage_posts_custom_column' action hook.
@@ -174,6 +210,7 @@ function testimonials_columns( $column, $post_id ) {
 			break;
 	}
 }
+
 /*
 * The code below displays the testimonials on the front-end of the website.
 * The $post_per_page argument function acts as an operator which shows the number of testimonials you want to display.
@@ -184,8 +221,11 @@ function get_testimonial( $posts_per_page, $orderby ) {
 	$args = array(
 		'posts_per_page' => $posts_per_page,
 		'post_type' => 'testimonials',
-		'orderby' => $orderby,
+		'orderby' => $orderby
 	);
+
+	$options = get_option( 'hundope_settings' );
+	
 	$query = new WP_Query( $args  );
 	$testimonials = '';
 	if ( $query->have_posts() ) {
@@ -194,26 +234,32 @@ function get_testimonial( $posts_per_page, $orderby ) {
 			$testimonials .= '<aside class="testimonial">';
 			$testimonials .= '<span class="quote"><i class="fa fa-comments"></i></span>';
 			$testimonials .= '<div class="entry-content">';
-			$testimonials .= '<p class="testimonial-text">' . get_the_content() . '</p>';
+			//The code below calls our options variable to get the colour indicated in the select field.
+			$testimonials .= '<p class="testimonial-text" style="color:' . $options['hundope_select_field'] . ';" >' . get_the_content() . '</p>';
 			$testimonials .= '<p class="testimonial-name"></p>';
 			$testimonials .= '</div>';
 			$testimonials .= '</aside>';
 		endwhile;
 		wp_reset_postdata();
+		
 	}
+
 	return $testimonials;
 }
+
 /*
 *The code below enables a shortcode to input into different pages in order to display the testimonials posted.
 *This functions is attached to the 'testimonial' action hook.
 *[testimonial posts_per_page="5" orderby="rand"]
 */
 add_shortcode( 'testimonial', 'testimonial_shortcode' );
+
 function testimonial_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'posts_per_page' => '5',
 		'orderby' => 'rand',
 	), $atts ) );
+
 	return get_testimonial( $posts_per_page, $orderby );
 }
 ?>
