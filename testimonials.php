@@ -21,22 +21,23 @@ add_action( 'wp_enqueue_scripts', 'testimonials_stylesheet' );
 add_action( 'init', 'testimonials_post_type' );
 //The code below adds the testimonials widget to make it available under the Appearance>Widgets option in WordPress.
 include( dirname( __FILE__ ) . '/testimonials_widget.php' );
+//The code below adds the submenu under our testimonials page inside of the WordPress dashboard. We took a snippet of the URL since it is a custom post type in order for our options menu to show up under the testimonials page.
 function testimonials_add_admin_menu(  ) { 
 	add_submenu_page( 'edit.php?post_type=testimonials', 'Options', 'Options', 'manage_options', 'my_awesome_plugin', 'my_awesome_plugin_options_page' );
 	
 }
-//The code below is our attempt at trying to register our options page and construct it under the options submenu.
+//The code below registers the settings to make them show up under our options page.
 function hundope_settings_init(  ) { 
 	register_setting( 'options_page', 'hundope_settings' );
 	
-//This is adding the action to set our options page within the submenu page called options.
+//We indicated the title to be description in the options page.
 	add_settings_section(
 		'options_page_section', 
 		__( 'Description', 'hundope' ), 
 		'hundope_settings_section_callback', 
 		'options_page'
 	);
-//We are trying to add a field to display on the options page.
+//The code below adds the settings field to make our dropdown menu show up.
 	add_settings_field( 
 		'hundope_select_field', 
 		__( 'Choose a colour from the dropdown:', 'hundope' ), 
@@ -45,16 +46,9 @@ function hundope_settings_init(  ) {
 		'options_page_section' 
 	);
 }
-//The function below should be the content on the options page to show a dropdown menu.
+//The function below should be the content on the options page to show a dropdown menu. Our goal was to let users select which colour to make the testimonial posts.
 function hundope_select_field_render() { 
-	$options = get_option( 'hundope_settings' );
-	?>
-	<select name="hundope_settings[hundope_select_field]">
-	<option value="1" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>Blue</option>
-	<option value="2" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Red</option>
-	<option value="3" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Green</option>
-	</select>
-<?php
+	
 }
 function hundope_settings_section_callback() { 
 	echo __( 'Select a colour that you would like to make the testimonial posts.', 'hundope' );
@@ -64,18 +58,34 @@ function my_awesome_plugin_options_page() {
 	<form action="options.php" method="post">
 		
 		<h2>Options Page</h2>
-		
 		<?php
 		settings_fields( 'options_page' );
 		do_settings_sections( 'options_page' );
+		//The code below defines and physically calls  the dropdown menu from the register settings.
+		$options = get_option( 'hundope_settings' );
+	?>
+	<select name="hundope_settings[hundope_select_field]">
+	<option value="None" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>None</option>		
+	<option value="Black" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Black</option>
+	<option value="Blue" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 );  ?>>Blue</option>
+	<option value="Red"  <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
+	<option value="Green" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 5 ); ?>>Green</option>
+	<option value="Yellow" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 6 ); ?>>Yellow</option>
+	<option value="Purple" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 7 ); ?>>Purple</option>
+	<option value="Brown" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 8 ); ?>>Brown</option>
+	</select>
+		
+		<?php
+		//The code below enables the save changes button to be available and save the indicated colour change.
 		submit_button();
 		?>
-		
+				
 	</form>
 	<?php
+return $options;
 }
 add_action( 'admin_menu', 'testimonials_add_admin_menu' );
-add_action( 'admin_init', 'hundope_settings_init' );	
+add_action( 'admin_init', 'hundope_settings_init' );
 /*
 *This function testimonial_post_type creates the custom post type.
 *This function is supported by the $labels array which lists the name for each section within the plugin. 
@@ -184,22 +194,31 @@ function get_testimonial( $posts_per_page, $orderby ) {
 	$args = array(
 		'posts_per_page' => $posts_per_page,
 		'post_type' => 'testimonials',
-		'orderby' => $orderby,
+		'orderby' => $orderby
 	);
+//The options argument pulls the option of grabing each specific colour that's indicated in the select field.
+	$options = get_option( 'hundope_settings' );
+	
+/*
+*We decided to do an inline style. If we were to do the style in a css stylesheet, the change for colours would not physically show up on the front end of our site. 
+*/
 	$query = new WP_Query( $args  );
 	$testimonials = '';
 	if ( $query->have_posts() ) {
 		while ( $query->have_posts() ) : $query->the_post();
-			$post_id = get_the_ID();
-			$testimonials .= '<aside class="testimonial">';
-			$testimonials .= '<span class="quote"><i class="fa fa-comments"></i></span>';
-			$testimonials .= '<div class="entry-content">';
-			$testimonials .= '<p class="testimonial-text">' . get_the_content() . '</p>';
-			$testimonials .= '<p class="testimonial-name"></p>';
-			$testimonials .= '</div>';
-			$testimonials .= '</aside>';
+		$post_id = get_the_ID();
+		$testimonials .= '<aside class="testimonial">';
+		//The code below calls the options variable to indicate the colour in the select field and apply it towards our testimonial quote icon.
+		$testimonials .= '<span class="quote"><i class="fa fa-comments" style="color:' . $options['hundope_select_field'] . ';"></i></span>';
+		$testimonials .= '<div class="entry-content">';
+		//The code below calls our options variable to get the colour indicated in the select field and apply it onto the text.
+		$testimonials .= '<p class="testimonial-text" style="color:' . $options['hundope_select_field'] . ';" >' . get_the_content() . '</p>';
+		$testimonials .= '<p class="testimonial-name"></p>';
+		$testimonials .= '</div>';
+		$testimonials .= '</aside>';
 		endwhile;
 		wp_reset_postdata();
+		
 	}
 	return $testimonials;
 }
