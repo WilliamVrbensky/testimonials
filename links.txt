@@ -1,0 +1,7 @@
+Link to the website where we applied our plugin:
+
+http://phoenix.sheridanc.on.ca/~ccit2661/
+
+Link to the GitHub directory to view our contributions:
+
+https://github.com/WilliamVrbensky/testimonials.git
