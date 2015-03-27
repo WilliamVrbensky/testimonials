@@ -78,22 +78,21 @@ function my_awesome_plugin_options_page() {
 		$options = get_option( 'hundope_settings' );
 	?>
 	<select name="hundope_settings[hundope_select_field]">
-	<option value="none" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1, ); ?>>None</option>		
-	<option value="black" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Black</option>
-	<option value="blue" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 ); ?>>Blue</option>
-	<option value="Red" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
-	<option value="green" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 5 ); ?>>Green</option>
-	<option value="yellow" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 6 ); ?>>Yellow</option>
-	<option value="purple" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 7 ); ?>>Purple</option>
-	<option value="brown" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 8 ); ?>>Brown</option>
+	<option value="None" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 1 ); ?>>None</option>		
+	<option value="Black" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 2 ); ?>>Black</option>
+	<option value="Blue" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 3 );  ?>>Blue</option>
+	<option value="Red"  <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 4 ); ?>>Red</option>
+	<option value="Green" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 5 ); ?>>Green</option>
+	<option value="Yellow" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 6 ); ?>>Yellow</option>
+	<option value="Purple" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 7 ); ?>>Purple</option>
+	<option value="Brown" <?php if (isset($options['hundope_select_field'])) selected( $options['hundope_select_field'], 8 ); ?>>Brown</option>
 	</select>
 		
 		<?php
-		echo $options['hundope_select_field'];
 		//The code below enables the save changes button to be available and save the indicated colour change.
 		submit_button();
 		?>
-			
+				
 	</form>
 	<?php
 return $options;
